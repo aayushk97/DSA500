@@ -1,0 +1,32 @@
+1. Insert the start time and end time in an array
+2. Sort this array based on end time
+3. Go through the array and check who has the startime > current interval selected end time.
+4. Return the number of such intervals which will be maximum
+
+static bool compareFinishTimes(pair<int, int>& a, pair<int, int>& b){
+        return a.second < b.second;
+    }
+    
+    int activitySelection(vector<int> start, vector<int> end, int n)
+    {
+        // Your code here
+        vector<pair<int, int>> intervals;
+        
+        for(int i = 0; i < start.size(); i++){
+            intervals.push_back({start[i], end[i]});
+        }
+        
+        sort(intervals.begin(), intervals.end(), compareFinishTimes);
+        
+        int endTime = intervals[0].second;
+        int count = 1;
+        for(int i = 1; i < intervals.size(); i++){
+            if(intervals[i].first > endTime){
+                endTime = intervals[i].second;
+                count++;
+            }
+        }
+        
+        return count;
+        
+    }
