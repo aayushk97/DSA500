@@ -1,0 +1,39 @@
+Solution: We calculate the sum of each of the 3 stacks.
+2. Then initialize the pointer at the start of each of the 3 stacks.
+3. Whent the sum of any of the stack increases we pop that particular stack element.
+4. We stop when the sum of all the stacks is same or one of the stacks is empty.
+
+class Solution{
+public:
+    int maxEqualSum(int N1,int N2,int N3,vector<int> &S1,vector<int> &S2,vector<int> &S3){
+        
+        int sum1 = 0, sum2 = 0, sum3 = 0;
+        
+        for(int i = 0; i < N1; i++) sum1 += S1[i];
+        for(int i = 0; i < N2; i++) sum2 += S2[i];
+        for(int i = 0; i < N3; i++) sum3 += S3[i];
+        
+        int top1 = 0, top2 = 0, top3 = 0;
+        while(N1 > top1 && N2 > top2 && N3 > top3){
+            
+            if(sum1 == sum2 && sum2 == sum3) return sum1;
+            
+            if(sum1 >= sum2 && sum1 >= sum3){
+                sum1 -= S1[top1];
+                top1++;
+                
+            }else if(sum2 >= sum1 && sum2 >= sum3){
+                sum2 -= S2[top2];
+                top2++;
+            }else if(sum3 >= sum1 && sum3 >= sum2){
+                sum3 -= S3[top3];
+                top3++;
+            }
+            
+            
+        }
+        
+        return 0;
+        
+    }
+};
