@@ -1,0 +1,83 @@
+Steps: 
+1. Create a datastructure to hold the character and its count.
+2. Use a minHeap to store all these nodees.
+3. Using a while loop pop 2 elemets having the lowest count and make it as children of 
+current node and push this current node inside the heap.
+4. Repeat step 3 untill the heap is empty.
+5. Inorder traverse to get the huffman codes.
+
+
+class Solution
+{   
+    
+    
+	public:
+	class TreeNode{
+	    public: 
+	    char dChar;
+        int data;
+        TreeNode* left;
+        TreeNode* right;
+        
+        TreeNode(int val, char dChar){
+            dChar = dChar;
+            data = val;
+            left = NULL;
+            right = NULL;
+        }
+    };
+        struct compare{
+            bool operator()(TreeNode* l, TreeNode* r){
+                return (l -> data > r -> data);
+            }
+        };
+    
+		vector<string> huffmanCodes(string S,vector<int> f,int N)
+		{
+		    // Code here
+		    priority_queue<TreeNode*, vector<TreeNode*>, compare> pq;
+		    
+		    for(int i = 0; i < N; i++){
+		        pq.push(new TreeNode(f[i], S[i]));
+		        
+		    }
+		    
+		    
+		    while(pq.size() > 1){
+		        TreeNode* left = pq.top();
+		        pq.pop();
+		        TreeNode* right = pq.top();
+		        pq.pop();
+		        
+		        TreeNode* top = new TreeNode(left -> data + right -> data, '#');
+		        top -> left = left;
+		        top -> right = right;
+		        
+		        pq.push(top);
+		        
+		    }
+		    
+		    vector<string> res;
+		    
+		    getCodes(pq.top(), "", res);
+		    
+		    return res;
+		    
+		}
+		
+		void getCodes(TreeNode* root, string temp, vector<string>& res){
+		    if(!root -> left && !root -> right) {
+		        res.push_back(temp);
+		        return ;
+		        
+		    }
+		    
+		    if(!root -> left || !root -> right) return ;
+		    
+		    
+		    getCodes(root -> left, temp + '0', res);
+		    getCodes(root -> right, temp + '1', res);
+		    
+		}
+
+};
