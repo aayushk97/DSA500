@@ -1,0 +1,57 @@
+Steps:
+1. find the charcter count of each character in the string
+2. put the count and the character in a max heap
+3. insert the max count character in the string, decrement count and put this character in the next iteration.
+4. Take the max count character and insert it into the string everytime
+
+// } Driver Code Ends
+class Solution
+{
+    public:
+    string rearrangeString(string str)
+    {
+        //code here
+        //count number of characters
+        unordered_map<char, int> mp;
+        for(int i = 0; i < str.length(); i++) mp[str[i]]++;
+        
+        string res = "";
+        
+        
+        priority_queue<pair<int, char>> pq;
+        
+        for(auto it = mp.begin(); it != mp.end(); it++){
+            pq.push({it -> second, it -> first});
+        }
+        
+        
+        pair<int, char> prev = {-1, '-1'};
+        
+        while(pq.size()){
+            
+            
+            pair<int, char> curr = pq.top();
+            
+            res += curr.second;
+            pq.pop();
+            
+            if(prev.first > 0){
+                pq.push(prev);
+            }
+            
+            curr.first--;
+            
+            
+            prev = curr;
+            
+            
+            
+            
+        }
+        
+        if(res.length() != str.length()) return "-1";
+        return res;
+        
+    }
+    
+};
