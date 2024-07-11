@@ -1,0 +1,49 @@
+Steps:
+1. We first find S - 1 so we can have the lestmost digit as 1 and the rest of S - 1 digits distributed in all of the (0-D) digits.
+2. This is done to be safe, so rest of the middle elements can be 0 but not the starting one. 
+3. We start assigning 9 from the right and when the number is less than 9 we assign the remaining sum
+4. If the sum is finished before reaching 1st bit then its fine if not then we add the remaining S to leftmost bit and this will be
+less than S.
+5. We already have a case where S > D*9 then it will not be possible to make the number with D digits.
+
+// } Driver Code Ends
+// User function Template for C++
+class Solution {
+  public:
+    string smallestNumber(int S, int D) {
+        // code here
+        if(S == 0 && D == 1) return "0";
+        if((S == 0 && D > 1) || (S > D * 9)) return "-1";
+        
+        vector<char> temp;
+        
+        for(int i = 0; i < D; i++) temp.push_back(0);
+        
+        temp[0] = 1;
+        
+        S = S - 1;
+        
+       
+        
+        for(int i = D-1; i >= 0; i--){
+            
+            if(S > 9) {
+                temp[i] = '9';
+                S -= 9;   
+            }else{
+                temp[i] = temp[i] + S + '0';
+                
+                S = 0;
+            } 
+            
+            //if(S == 0) break;
+        }
+        
+        string res = "";
+        
+        for(int i = 0; i < temp.size(); i++) res += temp[i];
+        
+        return res;
+        
+    }
+};
